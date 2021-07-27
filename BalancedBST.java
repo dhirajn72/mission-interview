@@ -4,7 +4,7 @@ class Solution {
     int index=0;
     public TreeNode balanceBST(TreeNode root) {
         if(root==null)
-            return root;
+                                        return root;
         arr=new int[getTreeSize(root)];
         inOrder(root);
         return buildTree(arr,0,arr.length-1);

@@ -5,7 +5,7 @@ public List<List<Integer>> levelOrder(TreeNode root) {
 	List<Integer> list=new ArrayList<>();
    	Stack<TreeNode> s=new Stack<>();
    	s.push(root);
-	q.offer(temp.left);
+	q.offer(null);
    	while(!s.isEmpty()){
          TreeNode temp=s.pop();   
          if(temp!=null){
