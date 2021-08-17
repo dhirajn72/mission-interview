@@ -32,10 +32,10 @@ public class Bfs {
         System.out.print(vertices[index].label+",");
     }
 
-    public void bfs(int src){
-        vertices[src].visited=true;
-        displayVertex(src);
-        queue.offer(src);
+    public void bfs(){
+        vertices[0].visited=true;
+        displayVertex(0);
+        queue.offer(0);
         int v1;
         while (!queue.isEmpty()){
             int v2=queue.remove();
@@ -75,7 +75,7 @@ public class Bfs {
         bfs.addEdge(0,4);
         bfs.addEdge(0,3);
 
-        bfs.bfs(3);
+        bfs.bfs();
     }
 
 /**
