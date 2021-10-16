@@ -1,29 +1,82 @@
 class Solution {
     public List<String> topKFrequent(String[] words, int k) {
-        if(words==null||words.length==0)
-            return new ArrayList<>();
         List<String> result=new ArrayList<>();
+        if(words==null||words.length==0)
+            return result;
+        Heap heap=new Heap(words.length);
         Map<String,Integer> map=new HashMap<>();
         for(String word:words){
-            map.compute(word,(K,V)->V==null?1:V+1);
+            if(map.containsKey(word)){
+                map.put(word,map.get(word)+1);
+            }
+            else{
+                map.put(word,1);
+            }
         }
-        System.out.println(map);
-        map=map.entrySet()
-                .stream()
-                .sorted((Map.Entry.<String, Integer>comparingByValue().reversed()))
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-        System.out.println(map);
-        Queue<String> keys=new LinkedList<>();
-        Set<String> keySet=map.keySet();
-        for(String key:keySet)
-            keys.offer(key);
-
-        System.out.println(keys);
+        for(String word:map.keySet()){
+            heap.insert(word,map.get(word));
+        }
+        
+        List<String> list=new ArrayList<>();
         while(k-->0){
-            if(!keys.isEmpty())
-                result.add(keys.poll());
+            Heap.Node node=heap.remove();
+            list.add(node.data);
         }
-        Collections.sort(result);
-        return result;
+        return list;
+    }
+    class Heap{
+        Node[] arr;
+        int curr,max;
+        Heap(int size){
+            arr=new Node[size];
+            this.max=size;
+            curr=0;
+        }
+        void insert(String data,int count){
+            Node node=new Node(data,count);
+            arr[curr]=node;
+            trickleUp(curr++);
+        }
+        void trickleUp(int index){
+            int parent=(index-1)/2;
+            Node bottom=arr[index];
+            while(index>0 && arr[parent].count < bottom.count){
+                arr[index]=arr[parent];
+                index=parent;
+                parent=(parent-1)/2;
+            }
+            arr[index]=bottom;
+        }
+        Node remove(){
+            Node node=arr[0];
+            arr[0]=arr[--curr]; 
+            arr[curr]=null;
+            trickleDown(0);
+            return node;
+        }
+        void trickleDown(int index){
+            int largeChild=0;
+            Node top=arr[0];
+            while(index<curr/2){
+                int leftChild=2*index+1;
+                int rightChild=2*index+2;
+                if(rightChild<curr && arr[leftChild].count<arr[rightChild].count)
+                    largeChild=rightChild;
+                else
+                    largeChild=leftChild;
+                if(top.count>=arr[largeChild].count)break;
+                arr[index] = arr[largeChild];
+                index=largeChild;
+            }
+            arr[index]=top;
+        }
+        class Node{
+            String data;
+            int count;
+            Node(String data,int count){
+                this.data=data;
+                this.count=count;
+            }
+        }
     }
 }
