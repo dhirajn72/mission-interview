@@ -20,21 +20,19 @@ class Solution {
         if(list1.size()!=list2.size())
             return false;
         int i=0;
-        int j=0;
-        while(i<list1.size() && j<list2.size()){
-            if(list1.get(i) != list2.get(j))
+        while(i<list1.size() ){
+            if(list1.get(i)!=list2.get(i))
                 return false;
             i++;
-            j++;
         }
         return true;
     }
     List<Integer> getLeaves(TreeNode root){
-        List<Integer> result=new ArrayList<>();
         if(root==null)
-            return result;
+            return new ArrayList<>();
+        List<Integer> result=new ArrayList<>();
         Stack<TreeNode> s=new Stack<>();
-        while(!s.isEmpty()||root!=null){
+        while(!s.isEmpty() || root!=null){
             if(root!=null){
                 s.push(root);
                 root=root.left;
@@ -49,5 +47,3 @@ class Solution {
         return result;
     }
 }
-
-

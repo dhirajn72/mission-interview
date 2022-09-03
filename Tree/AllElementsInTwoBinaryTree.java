@@ -14,41 +14,49 @@
  * }
  */
 class Solution {
+    List<Integer> result=new ArrayList<>();
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
-        List<Integer> list1=inOrder(root1);
-        List<Integer> list2=inOrder(root2);
-        System.out.println(list1);
-        System.out.println(list2);
-       
-        return merge(list1,list2);
-
+        //List<Integer> list1=getList(root1);
+        //List<Integer> list2=getList(root2);
+        //return merge(list1,list2);
+        anotherWay(root1);
+        anotherWay(root2);
+        Collections.sort(result);
+        return result;
     }
-    List<Integer> merge(List<Integer> l1,List<Integer> l2){
+    void anotherWay(TreeNode root){
+        if(root==null)
+            return;
+        result.add(root.val);
+        anotherWay(root.left);
+        anotherWay(root.right);
+    }
+
+    List<Integer> merge(List<Integer> list1,List<Integer> list2){
         List<Integer> result=new ArrayList<>();
         int i=0;
         int j=0;
-        while(i<l1.size() && j<l2.size()){
-            if(l1.get(i)<l2.get(j)){
-                result.add(l1.get(i));
+        while(i<list1.size() && j<list2.size()){
+            if(list1.get(i)<list2.get(j)){
+                result.add(list1.get(i));
                 i++;
             }
             else{
-                result.add(l2.get(j));
+                result.add(list2.get(j));
                 j++;
             }
         }
-        if(i<l1.size()){
-            for(int k=i;k<l1.size();k++)
-                result.add(l1.get(k));
+        while(i<list1.size()){
+            result.add(list1.get(i));
+            i++;
         }
-        if(j<l2.size()){
-            for(int k=j;k<l2.size();k++)
-                result.add(l2.get(k));
+        while(j<list2.size()){
+            result.add(list2.get(j));
+            j++;
         }
         return result;
     }
-
-    List<Integer> inOrder(TreeNode root){
+    List<Integer> getList(TreeNode root){
         List<Integer> result=new ArrayList<>();
         if(root==null)
             return result;
@@ -64,6 +72,6 @@ class Solution {
                 root=temp.right;
             }
         }
-        return new ArrayList(result);
+        return result;
     }
 }

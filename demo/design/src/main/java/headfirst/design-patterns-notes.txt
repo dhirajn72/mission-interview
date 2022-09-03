@@ -1,0 +1,113 @@
+Observer Design Pattern
+-----------------------
+The observer pattern is a software design pattern in which an object, named the subject, maintains a list of its dependents, called observers, and notifies them
+automatically of any state changes, usually by calling one of their methods.
+Which problems can the Observer design pattern solve?
+        The Observer pattern addresses the following problems:
+        A one-to-many dependency between objects should be defined without making the objects tightly coupled.
+        It should be ensured that when one object changes state, an open-ended number of dependent objects are updated automatically.
+        It should be possible that one object can notify an open-ended number of other objects.
+
+
+
+Decorator Pattern
+------------------
+
+In object-oriented programming, the decorator pattern is a design pattern that allows behavior to be added to an individual object, dynamically,
+without affecting the behavior of other objects from the same class.[1] The decorator pattern is often useful for adhering to the Single Responsibility Principle,
+as it allows functionality to be divided between classes with unique areas of concern.[2] Decorator use can be more efficient than subclassing, because an object's
+behavior can be augmented without defining an entirely new object.
+
+What problems can it solve?
+    Responsibilities should be added to (and removed from) an object dynamically at run-time.
+    A flexible alternative to subclassing for extending functionality should be provided.
+    When using subclassing, different subclasses extend a class in different ways. But an extension is bound to the class at compile-time and can't be changed at run-time
+
+
+Factory method
+-----------------
+In class-based programming, the factory method pattern is a creational pattern that uses factory methods to deal with the problem of creating objects without having
+to specify the exact class of the object that will be created. This is done by creating objects by calling a factory method—either specified in an interface and
+implemented by child classes, or implemented in a base class and optionally overridden by derived classes—rather than by calling a constructor.
+
+The Factory Method design pattern solves problems like:
+
+    How can an object be created so that subclasses can redefine which class to instantiate?
+    How can a class defer instantiation to subclasses?
+    The Factory Method design pattern describes how to solve such problems:
+
+    Define a separate operation (factory method) for creating an object.
+    Create an object by calling a factory method.
+
+Abstract Factory Method
+--------------------------
+The abstract factory pattern provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes.
+In normal usage, the client software creates a concrete implementation of the abstract factory and then uses the generic interface of the factory to create the
+concrete objects that are part of the theme. The client does not know (or care) which concrete objects it gets from each of these internal factories, since it
+uses only the generic interfaces of their products.[1] This pattern separates the details of implementation of a set of objects from their general usage and relies
+on object composition, as object creation is implemented in methods exposed in the factory interface.
+
+
+The Abstract Factory design pattern solves problems like: [4]
+
+    How can an application be independent of how its objects are created?
+    How can a class be independent of how the objects it requires are created?
+    How can families of related or dependent objects be created?
+
+
+Difference between Factory Method and Abstract Factory Method
+================================================================
+The main difference between Abstract Factory and Factory Method is that Abstract Factory is implemented by Composition; but Factory Method is implemented by Inheritance.
+
+Difference between AbstractFactory and Factory design patterns are as follows:
+
+1) Factory Method is used to create one product only but Abstract Factory is about creating families of related or dependent products.
+2) Factory Method pattern exposes a method to the client for creating the object whereas in the case of Abstract Factory they expose a family of related objects which may consist of these Factory methods.
+3) Factory Method pattern hides the construction of a single object whereas Abstract Factory hides the construction of a family of related objects. Abstract factories are usually implemented using (a set of) factory methods.
+4) Abstract Factory pattern uses composition to delegate the responsibility of creating an object to another class while Factory Method design pattern uses inheritance and relies on a derived class or subclass to create an object.
+5) The idea behind the Factory Method pattern is that it allows for the case where a client doesn't know what concrete classes it will be required to create at runtime, but just wants to get a class that will do the job while Abstract Factory pattern is best utilized when your system has to create multiple families of products or you want to provide a library of products without exposing the implementation details.!
+
+
+
+Singleton Design Patter
+-----------------------
+In software engineering, the singleton pattern is a software design pattern that restricts the instantiation of a class to one "single" instance. This is useful when exactly one object is needed to coordinate actions across the system.
+The singleton design pattern solves problems by allowing it to:[2]
+    Ensure that a class only has one instance
+    Easily access the sole instance of a class
+    Control its instantiation
+    Restrict the number of instances
+    Access a global variable
+
+Adapter Design Pattern
+------------------------
+In software engineering, the adapter pattern is a software design pattern (also known as wrapper, an alternative naming shared with the decorator pattern) that allows the interface of an existing class to be used as another interface.[1] It is often used to make existing classes work with others without modifying their source code.
+
+The adapter design pattern solves problems like:
+    How can a class be reused that does not have an interface that a client requires?
+    How can classes that have incompatible interfaces work together?
+    How can an alternative interface be provided for a class?
+
+
+Facade Desing Pattern
+----------------------
+The facade pattern (also spelled façade) is a software-design pattern commonly used in object-oriented programming. Analogous to a facade in architecture, a facade is an object that serves as a front-facing interface masking more complex underlying or structural code. A facade can:
+improve the readability and usability of a software library by masking interaction with more complex components behind a single (and often simplified) API
+provide a context-specific interface to more generic functionality (complete with context-specific input validation)
+serve as a launching point for a broader refactor of monolithic or tightly-coupled systems in favor of more loosely-coupled code
+Developers often use the facade design pattern when a system is very complex or difficult to understand because the system has many interdependent classes or because its source code is unavailable. This pattern hides the complexities of the larger system and provides a simpler interface to the client. It typically involves a single wrapper class that contains a set of members required by the client. These members access the system on behalf of the facade client and hide the implementation details.
+
+What problems can the Facade design pattern solve?
+    To make a complex subsystem easier to use, a simple interface should be provided for a set of interfaces in the subsystem.
+    The dependencies on a subsystem should be minimized.
+
+
+
+Proxy Desing Pattern
+--------------------
+In computer programming, the proxy pattern is a software design pattern. A proxy, in its most general form, is a class functioning as an interface to something else. The proxy could interface to anything: a network connection, a large object in memory, a file, or some other resource that is expensive or impossible to duplicate. In short, a proxy is a wrapper or agent object that is being called by the client to access the real serving object behind the scenes. Use of the proxy can simply be forwarding to the real object, or can provide additional logic. In the proxy, extra functionality can be provided, for example caching when operations on the real object are resource intensive, or checking preconditions before operations on the real object are invoked. For the client, usage of a proxy object is similar to using the real object, because both implement the same interface.
+What problems can the Proxy design pattern solve?
+    The access to an object should be controlled.
+    Additional functionality should be provided when accessing an object.
+    When accessing sensitive objects, for example, it should be possible to check that clients have the needed access rights.
+

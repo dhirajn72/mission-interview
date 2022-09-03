@@ -14,22 +14,21 @@
  * }
  */
 class Solution {
-    int sum=0;
-    TreeNode result=null;
     public TreeNode bstToGst(TreeNode root) {
         if(root==null)
-            return null;
-        result=root;
+            return root;
         Stack<TreeNode> s=new Stack<>();
-        while(!s.isEmpty()||root!=null){
+        TreeNode result=root;
+        int sum=0;
+        while(!s.isEmpty() || root!=null){
             if(root!=null){
                 s.push(root);
                 root=root.right;
             }
             else{
                 TreeNode temp=s.pop();
-                temp.val+=sum;
-                sum=temp.val;
+                sum+=temp.val;
+                temp.val=sum;
                 root=temp.left;
             }
         }
