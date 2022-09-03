@@ -16,34 +16,31 @@
 class Solution {
     public TreeNode balanceBST(TreeNode root) {
         if(root==null)
-            return root;
+            return null;
         int[] arr=new int[getSize(root)];
-        getNodes(arr,root);
+        fillArr(arr,root);
         return buildTree(arr,0,arr.length-1);
     }
-    TreeNode buildTree(int[] nums,int low,int high){
-        if(low>high){
+    TreeNode buildTree(int[] arr,int low,int high){
+        if(low>high)
             return null;
-        }
         int mid=(low+high)/2;
-        TreeNode root=new TreeNode(nums[mid]);
-        root.left=buildTree(nums,low,mid-1);
-        root.right=buildTree(nums,mid+1,high);
+        TreeNode root=new TreeNode(arr[mid]);
+        root.left=buildTree(arr,low,mid-1);
+        root.right=buildTree(arr,mid+1,high);
         return root;
     }
-    void getNodes(int[] arr,TreeNode root){
-        if(root==null)
-            return ;
-        int i=0;
+    void fillArr(int[] arr,TreeNode root){
         Stack<TreeNode> s=new Stack<>();
-        while(!s.isEmpty()||root!=null){
+        int index=0;
+        while(!s.isEmpty() || root!=null){
             if(root!=null){
                 s.push(root);
                 root=root.left;
             }
             else{
                 TreeNode temp=s.pop();
-                arr[i++]=temp.val;
+                arr[index++]=temp.val;
                 root=temp.right;
             }
         }

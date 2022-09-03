@@ -1,0 +1,41 @@
+Activity Selection Problem
+Kruskal’s Minimum Spanning Tree Algorithm
+Huffman Coding
+Efficient Huffman Coding for Sorted Input
+Prim’s Minimum Spanning Tree Algorithm
+Prim’s MST for Adjacency List Representation
+Dijkstra’s Shortest Path Algorithm
+Dijkstra’s Algorithm for Adjacency List Representation
+Job Sequencing Problem
+Greedy Algorithm to find Minimum number of Coins
+K Centers Problem
+Minimum Number of Platforms Required for a Railway/Bus Station
+Connect n ropes with minimum cost
+Graph coloring
+Fractional Knapsack Problem
+Minimize Cash Flow among a given set of friends who have borrowed money from each other
+Find minimum time to finish all jobs with given constraints
+Find maximum sum possible equal to sum of three stacks
+Dail’s Algorithm
+Boruvka’s algorithm
+
+
+
+
+Activity Selection Problem
+Given a set of activities, along with the starting and finishing time of each activity, find the maximum number of activities performed by a single person assuming that a person can only work on a single activity at a time.
+Graph Coloring Problem
+Graph coloring (also called vertex coloring) is a way of coloring a graph’s vertices such that no two adjacent vertices share the same color. This post will discuss a greedy algorithm for graph coloring and minimize the total number of colors used.
+Job Sequencing Problem with Deadlines
+Given a set of tasks with deadlines and total profit earned on completing a task, find maximum profit earned by executing the tasks within the specified deadlines. Assume that a task takes one unit of time to execute, and it can’t execute beyond its deadline. Also, only a single task will be executed at a time.
+Find minimum platforms needed to avoid delay in the train arrival
+Given a schedule containing the arrival and departure time of trains in a station, find the minimum number of platforms needed to avoid delay in any train’s arrival.
+Huffman Coding Compression Algorithm
+Huffman coding (also known as Huffman Encoding) is an algorithm for doing data compression, and it forms the basic idea behind file compression. This post talks about the fixed-length and variable-length encoding, uniquely decodable codes, prefix rules, and Huffman Tree construction.
+Single-Source Shortest Paths — Dijkstra’s Algorithm
+Given a source vertex `s` from a set of vertices `V` in a weighted graph where all its edge weights `w(u, v)` are non-negative, find the shortest path weights `d(s, v)` from source `s` for all vertices `v` present in the graph.
+Kruskal’s Algorithm for finding Minimum Spanning Tree
+Given an undirected, connected and weighted graph, construct a minimum spanning tree out of it using Kruskal’s Algorithm.
+Shortest Superstring Problem
+Given a list of strings where no string is a substring of another, find the shortest string that contains each string in the list as a substring.
+Thanks for reading.

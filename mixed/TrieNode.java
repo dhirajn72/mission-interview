@@ -1,18 +1,21 @@
 import java.util.HashMap;
 
-public class Trie {
-    private TrieNode root;
+public class TrieNode {
 
-    public Trie(){
-        this.root=new TrieNode();
-    }
+    private HashMap<Character, TrieNode> children;
+    private String content;
+    private boolean isWord;
+    private boolean isEndOfWord;
+
     public void insert(String word) {
         TrieNode current = root;
+     
         for (char l: word.toCharArray()) {
             current = current.children.computeIfAbsent(l, c -> new TrieNode());
         }
         current.isEndOfWord=true;
     }
+
     public boolean find(String word) {
         TrieNode current = root;
         for (int i = 0; i < word.length(); i++) {
@@ -25,6 +28,7 @@ public class Trie {
         }
         return current.isEndOfWord;
     }
+
     public void delete(String word) {
         delete(root, word, 0);
     }
@@ -50,26 +54,5 @@ public class Trie {
         }
         return false;
     }
-
-    static class TrieNode{
-        private HashMap<Character, TrieNode> children;
-        private String content;
-        private boolean isWord;
-        private boolean isEndOfWord;
-
-        public TrieNode(){
-            this.children=new HashMap<>();
-        }
-    }
-    public static void main(String[] args){
-        Trie trie = new Trie();
-        trie.insert("Programming");
-        trie.insert("is");
-        trie.insert("a");
-        trie.insert("way");
-        trie.insert("of");
-        trie.insert("life");
-        System.out.println("Insertion completes !!");
-        
-    }
+    
 }

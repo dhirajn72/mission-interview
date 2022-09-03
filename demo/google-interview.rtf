@@ -1,0 +1,2185 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Monaco;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red151\green0\blue126;\red245\green247\blue249;\red29\green38\blue42;
+\red20\green0\blue196;}
+{\*\expandedcolortbl;;\cssrgb\c66667\c5098\c56863;\cssrgb\c96863\c97647\c98039;\cssrgb\c14902\c19608\c21961;
+\cssrgb\c10980\c0\c81176;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww15240\viewh14640\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf0 class Solution \{\
+    public int mincostTickets(int[] days, int[] costs) \{\
+		boolean[] isTravelDay = new boolean[366];		for(int day : days)\{\
+			isTravelDay[day] = true;\
+		\}	\
+		int[] dp = new int[366];\
+		Arrays.fill(dp, Integer.MAX_VALUE);\
+		dp[0] = 0;\
+		for( int day : days)\{\
+			if(!isTravelDay[day])\{\
+				dp[day] = dp[day - 1];\
+				continue;\
+			\}\
+			dp[day] = Math.min(dp[day], dp[day - 1] + cost[0]);\
+			if(i - 7 >= 0)\{\
+				dp[day] = Math.min(dp[day], dp[day - 7] + cost[1]);\
+			\}\
+			else\{\
+				dp[day] = Math.min(dp[day], cost[1]);\
+			\}\
+\
+			if(i - 30 >= 0)\{\
+				dp[day] = Math.min(dp[day], cost[day - 30] + cost[2]);\
+			\}\
+			else\{\
+				dp[day] = Math.min(dp[day], cost[2]);\
+			\}\
+			return dp[365];\
+		\}\
+    \}\
+\}\
+\
+class Solution \{\
+    public int waysToMakeFair(int[] nums) \{\
+ 		int n = nums.length;\
+		int[] evenSum = new int[n];\
+		int[] oddSum = new int[n];\
+		int odd = 0, even = 0, result = 0;\
+		for(int i = 0; i < n ; i++)\{\
+			if( i % 2 == 0)\{\
+				even += nums[i];\
+			\}\
+			else\{\
+				odd += nums[i];\
+			\}\
+			evenSum[i] = even;\
+			oddSum[i] = odd;\
+		\}       \
+		for(int i = 0; i < n ; i++)\{\
+			if(i == 0)\{\
+				int newEvenSum = oddSum[n - 1];\
+				int newOddSum = evenSum[n - 1] - nums[i];\
+				if(newEvenSum == newOddSum )\{\
+					result++;\
+				\}\
+				continue;\
+			\}\
+			int newEvenSum = nums[i - 1] + oddSum[n - 1] -  oddSum[i];\
+			int newOddSum = nums[i - 1] + evenSum[n - 1] - evenSum[i];\
+			if(newEvenSum == newOddSum )\{\
+				result++;\
+			\}\
+		\}\
+		return result ;\
+    \}\
+\}\
+\
+\
+\
+class Solution \{\
+    public int numberOfArithmeticSlices(int[] nums) \{\
+ 		if(nums.length < 3 )\
+			return 0;\
+		int result = 0;\
+		for(int i = 2; i < nums.length ; i++)\{\
+			if(nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2])\{\
+				count++;\
+				result += count;\
+			\}\
+			else\{\
+				count = 0;\
+			\}\
+		\}\
+		return result;\
+    \}\
+\}\
+	\
+\
+\
+\
+class Solution \{\
+    public int minCost(String colors, int[] neededTime) \{\
+		int[] dp = new int[neededTime.length];\
+		for(int i = 0; i < n - 1; i++)\{\
+			if(colors.charAt(i) == colors.charAt(i + 1))\{\
+				if(neededTime[i] < neededTime[i + 1])\{\
+					dp[i] = neededTime[i];\
+				\}\
+				else\{\
+					dp[i + 1] = neededTime[i + 1];\
+				\}\
+			\}\
+		\}\
+		int result = 0;\
+		for(int val : dp )\{\
+			result += val;\
+		\}\
+		return result;        \
+    \}\
+\}\
+\
+public int minCost(String s, int[] cost) \{\
+    int res = cost[0], max_cost = cost[0];\
+    for (int i = 1; i < s.length(); ++i) \{\
+        if (s.charAt(i) != s.charAt(i - 1)) \{\
+            res -= max_cost;\
+            max_cost = 0;\
+        \}\
+        res += cost[i];\
+        max_cost = Math.max(max_cost, cost[i]);\
+    \}\
+    return res - max_cost;\
+\}\
+\
+\
+class Solution \{\
+    public int minimumDeleteSum(String s1, String s2) \{\
+		int[][] dp = new int[s1.length() + 1][s2.length() + 1];\
+		for(int i = 1; i <= s1.length() ; i++)\{\
+			dp[i][0] = dp[i - 1][0] + s1.charAt(i - 1); \
+		\}        \
+		for(int j = 1 ; j <= s2.length(); j++)\{\
+			dp[0][j] = dp[0][ j - 1] + s2.charAt(j - 1);\
+		\}\
+		for(int i = 1; i <= s1.length(); i++)\{\
+			for(int j = 1; j <= s2.length(); j++)\{\
+				dp[i][j] = dp[i - 1][j - 1] + ((s1.charAt(i - 1) == s2.charAt(j - 1) ) ? 0 : dp[i - j][j] + dp[i][j - 1]);\
+				dp[i][j] = Math.min(dp[i][j], Math.min(dp[i - 1][j] + s1.charAt(i - 1), dp[i][j - 1] + s2.charAt(j - 1)));\
+			\}\
+		\}\
+		return dp[dp.length ][dp[0].length];\
+    \}\
+\}\
+\
+\
+\
+\
+class Solution \{\
+    public int longestSubarray(int[] nums) \{\
+ 			\
+			int result = 0;\
+			for( int i = 0; i < nums.length; i++)\{\
+					if(nums[i] == 0)\{\
+						for(int j = i - 1; j >= 0 ; j--)\{\
+							if(nums[j] == 1)\{\
+								count++; \
+							\}\
+							else\
+								break;\
+						\}\
+						for(int j = i + 1; j < nums.length ; j++)\{\
+							if(nums[j] == 1)\{\
+								count++; \
+							\}\
+							else\
+								break;\
+						\}\
+						result = Math.max(result, count + 1);\
+					\}\
+			\}       \
+			return result;\
+    \}\
+\}\
+\
+\
+This is bottom up solution:\
+----------------------------\
+class Solution \{\
+    public int uniquePaths(int m, int n) \{\
+ 		int[][] dp = new int[m][n];\
+		for(int i = 0; i < m ; i++)\{\
+			dp[i][0] = 1;\
+		\}       \
+		for(int j = 0; j < n ; j++)\{\
+			dp[0][j] = 1;\
+		\}\
+		for(int i = 1 ; i < m ; i++)\{\
+			for(int j = 1; j < n ; j++)\{\
+				dp[i][j] = dp[i - 1][j] + dp[i][ j - 1];\
+			\}\
+		\}\
+		return dp[m - 1][n - 1];\
+    \}\
+\}\
+\
+This is top-down solution converted from bottom-up above one:\
+------------------------------------------------------------\
+class Solution \{\
+    public int uniquePaths(int m, int n) \{\
+ 		int[][] dp = new int[m][n];		\
+		dfs(dp, m - 1, n - 1);\
+		return dp[m - 1][n - 1];\
+    \}\
+	\
+	int dfs(int[][] dp, int m, int n)\{\
+		if(m < 0 ||  n < 0)\{\
+			return 0;\
+		\}\
+		else if( m == 0 || n == 0)\{\
+			return 1;\
+		\}\
+		else if(dp[m][n] > 0)\{\
+			return dp[m][n];\
+		\}\
+		else\{\
+			dp[m][n] = dfs(dp, m, n - 1) + dfs(dp, m - 1, n);\
+			return dp[m][n]; \
+		\}\
+	\}\
+\}\
+\
+\
+\
+\
+class Solution \{\
+    public int minPathSum(int[][] grid) \{\
+ 		int[][] dp = new int[grid.length][grid[0].length];       \
+		for(int i = 0; i < grid.length ; i++)\{\
+			for(int j = 0 ; j < grid[i].length; j++)\{\
+				dp[i][j] = grid[i][j];\
+			\}\
+		\}\
+\
+		for(int i = 1; i < grid.length; i++)\{\
+			dp[i][0] += dp[i - 1][0];\
+		\}\
+		for(int j = 1; j < grid[0].length; j++)\{\
+			dp[0][j] += dp[0][j - 1];\
+		\}\
+		for(int i = 1; i < grid.length ; i++)\{\
+			for(int j = 1; j < grid[i].length; j++)\{\
+				dp[i][j] += Math.min(dp[i - 1][j], dp[i][j - 1]);\
+			\}\
+		\}\
+		return dp[dp.length - 1][dp[0].length];\
+    \}\
+\}\
+\
+This is recursive memoised version of above solution, very nice, amazing.\
+class Solution \{\
+    public int minPathSum(int[][] grid) \{\
+		return dfs(grid, grid.length - 1 , grid[0].length);\
+    \}\
+	int dfs(int[][] grid, int row, int col)\{\
+		if(row == 0 && col == 0)\
+			return grid[row][col];\
+		\
+		if(row == 0)\{\
+			return grid[row][col] + grid[row][col - 1];\
+		\}\
+		if(col == 0)\{\
+			return grid[row][col] + grid[row - 1][col];\
+		\}\
+		return grid[row][col] + Math.min(dfs(grid, row, col - 1), dfs(grid, row - 1, col));\
+	\}\
+\}\
+\
+\
+class Solution \{\
+    public int longestPalindromeSubseq(String s) \{\
+		int[][] dp = new int[s.length()][s.length()];\
+		for(int i = 0; i < dp.length; i++)\{\
+			dp[i][i] = 1;\
+		\}        \
+		for(int i = 2; i <= s.length(); i++)\{\
+			for(int j = 0; j <= n - i; j++)\{\
+				int  k = i + j - 1;\
+				if(s.charAt(j) == s.charAt(k))\{\
+					dp[j][k] = 2 + dp[j + 1][k - 1];\
+				\}\
+				else\{\
+					dp[j][k] = Math.max(dp[j][ k - 1], dp[j - 1][k]);\
+				\}\
+			\}\
+		\}\
+		return dp[0][s.length() - 1];\
+    \}\
+\}\
+ \
+// Memoized version of above problem, beauty of dp\
+class Solution\{\
+    public int longestPalindromeSubseq(String s)\{\
+     return helper(s, 0, s.length() - 1 , new int[s.length()][s.length()]);   \
+    \}\
+    int helper(String s, int i, int j , int[][] dp)\{\
+        if( i > j)\
+            return 0;\
+        if(i == j)\
+            return 1;\
+        if(dp[i][j] != 0)\
+            return dp[i][j];\
+        if(s.charAt(i) == s.charAt(j))\{\
+            dp[i][j] = 2 + helper(s, i + 1, j - 1, dp);\
+        \}\
+        else\{\
+            dp[i][j] = Math.max(helper(s, i, j - 1, dp), helper(s, i + 1, j, dp));\
+        \}\
+        return dp[i][j];\
+    \}\
+\}\
+\
+\
+class Solution \{\
+    public int longestCommonSubsequence(String text1, String text2) \{\
+			int[][] dp = new int[text1.length() + 1][text2.length() + 1];\
+			for(int i = 1; i <= text1.length(); i++)\{\
+				for(int j = 1; j <= text2.length(); j++)\{\
+					if(text1.charAt(i - 1 ) == text2.charAt(j - 1))\{\
+						dp[i][j] = 1 + dp[i - 1][j - 1]; \
+					\}\
+					else\{\
+						dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);\
+					\}\
+				\}\
+			\}\
+			return dp[text1.length()][text2.length()];\
+    \}\
+\}\
+\
+\
+class Solution \{\
+    public int longestCommonSubsequence(String text1, String text2) \{\
+		return helper(text1, text2, 0, 0);\
+	\}\
+	int helper(String s1, String s2, int i, int j)\{\
+		if(i >= s1.length() || j >= s2.length())\
+			return 0;\
+		\
+		if(s1.charAt(i) == s2.charAt(j))\{\
+			return 1 + helper(s1, s2, i + 1, j + 1);\
+		\}\
+		else\{\
+			int len1 = helper(s1, s2, i + 1, j);\
+			int len2 = helper(s1, s2, i, j + 1);\
+			return Math.max(len1, len2);\
+		\}\
+	\}\
+\}\
+\
+class Solution \{\
+	List<List<String>> result = new ArrayList<>();\
+    public List<List<String>> partition(String s) \{\
+		if(s == null || s.isEmpty())\
+			return result;\
+		backtrack(s, 0, new ArrayList<>());\
+		return result;\
+    \}\
+	void backtrack(String s, int start, List<String> list)\{\
+		if(start >= s.length())\{\
+			return;\
+		\}\
+		for(int i = start; i < s.length(); i++)\{\
+			if(isPalindrome(s, start, i))\{\
+				list.add(s.substring(start, i + 1));\
+				backtrack(s, i, list);\
+				list.add(list.size() - 1);\
+			\}\
+		\}\
+	\}\
+	boolean isPalindrome(String s, int i, int j)\{\
+		while(i < j)\{\
+			if(s.charAt(i) != s.charAt(j))\
+				return false;\
+			i++;\
+			j--;\
+		\}\
+		return true;\
+	\}\
+\}\
+\
+\
+\
+class Solution \{\
+    public boolean wordBreak(String s, List<String> wordDict) \{\
+ 		boolean[]  dp = new boolean[s.length() + 1];\
+       	dp[0] = true;\
+		for(int i = 1; i <= s.length(); i++)\{\
+			for(int j = 0; j < i ; j++)\{\
+				if(dp[j] && wordDict.contains(s.substring(j, i)))\{\
+					dp[i] = true;\
+					break;\
+				\}\
+			\}\
+		\}\
+		return dp[s.length()];\
+    \}\
+\}\
+\
+\pard\pardeftab720\partightenfactor0
+\cf0 public int minFlipsMonoIncr(String s) \{\
+    int n = s.length(), res = n;\
+    int[] oneBefore = new int[n], zeroAfter = new int[n];\
+        \
+    oneBefore[0] = s.charAt(0) == '1' ? 1 : 0;\
+    zeroAfter[n - 1] = s.charAt(n - 1) == '1' ? 0 : 1;\
+        \
+    for(int i = 1; i < n; i++)\
+        oneBefore[i] = oneBefore[i - 1] + (s.charAt(i) == '1' ? 1 : 0);\
+        \
+    for(int i = n - 2; i >= 0; i--)\
+        zeroAfter[i] = zeroAfter[i + 1] + (s.charAt(i) == '1' ? 0 : 1);\
+        \
+    for(int i = 0; i < n; i++)\
+        res = Math.min(res, oneBefore[i] + zeroAfter[i]);\
+\
+    return res - 1;\
+\}\
+\
+\
+\
+class Solution \{\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+    public\cf4  \cf2 static\cf4  \cf2 final\cf4  \cf2 long\cf4  MOD = \cf5 1\cf4 _000_000_007;
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+    public int countPaths(int n, int[][] roads) \{\
+		int[][] matrix = new int[n][n];\
+		for(int i = 0; i < n; i++ )\{\
+			int src = roads[i][0];\
+			int dest = roads[i][1];\
+			int time = roads[i][2];\
+			matrix[src][dest] = time; \
+		\}\
+		return dfs(matrix, n, 0);\
+		\
+    \}\
+	int dfs(int[][] roads, int n, int src)\{\
+		int[] dist = new int[n];\
+        	boolean[] visited = new boolean[n];\
+		Arrays.fill(dist, Integer.MAX_VALUE);\
+		dist[0] = 0;\
+		int d = n - 1, res = 0;\
+
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+		long\cf4 [] counts = \cf2 new\cf4  \cf2 long\cf4 [n];\
+		counts[0] = 1;
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+		for(int i = 0; i < n ; i++ )\{\
+			int v = getMin(dist, visited);\
+			if(v == -1 ) continue;\
+			//visited[v] = true;\
+			for(int u = 0; u < n; u++)\{\
+				if(roads[v][u] > 0)\{\
+					int newDist = roads[v][u] + dist[v];\
+					if(newDist < dist[u])\{\
+						dist[u] = newDist;\
+						counts[u] = counts[v];\
+					\}\
+					else if(roads[v][u] + dist[v] == dist[u])\{\
+						counts[u] = (counts[u] + counts[v]) % MOD;\
+					\}\
+				\}\
+			\}\
+		\}\
+		//return dist[n - 1];\
+		return (int) counts[n - 1];\
+	\}\
+\
+	int getMin(int[] distance, boolean[] visited)\{\
+		int min = Integer.MAX_VALUE;\
+		int minIndex = -1;\
+		for(int i = 0; i < distance.length; i++)\{\
+			if(distance[i] <  min)\{\
+				min = distance[i];\
+				minIndex = i;\
+			\}\
+		\}\
+		return minIndex;\
+	\}\
+\}\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+class Solution \{\
+    public int findCenter(int[][] edges) \{\
+        Map<Integer,List<Integer>> map = new HashMap<>();\
+		for(int[] edge : edges)\{\
+			int src = edge[0];\
+			int dest = edge[1];\
+			if(map.containsKey(src))\{\
+				map.get(src).add(dest);\
+				if(map.containsKey(dest))\{\
+					map.get(dest).add(src);\
+				\}\
+				else\{\
+					List<Integer> list = new ArrayList<>();\
+					list.add(dest);\
+					map.put(src, list);\
+				\}\
+			\}\
+			else\{\
+				List<Integer> list = new ArrayList<>();\
+				list.add(dest);\
+				map.put(src, dest);\
+\
+				if(map.containsKey(dest))\{\
+					map.get(dest).add(src);\
+				\}\
+				else\{\
+					List<Integer> list = new ArrayList<>();\
+					list.add(dest);\
+					map.put(src, list);\
+				\}\
+			\}		\
+		\}\
+		\
+		int max = Integer.MIN_VALUE;\
+		int node = -1;\
+		for(int key : map.keySet())\{\
+			List<Integer> values = map.get(key);\
+			if(values.size() > max)\{\
+				max = values.size();\
+				node = key;\
+			\}\
+		\}\
+		return node;\
+    \}\
+\}\
+\
+class Solution \{\
+    public boolean validPath(int n, int[][] edges, int source, int destination) \{\
+        UnionFind uf = new UnionFind(n);\
+		for(int[] edge : edges)\{\
+			uf.union(edge[0], edge[1]);\
+		\}\
+		return uf.find(source) == uf.find(destination);\
+    \}\
+\
+	class UnionFind\{\
+		int[] ids;\
+		int[] size;\
+		UnionFind(int n)\{\
+			ids = new int[n];\
+			size = new int[n];\
+			for(int i = 0; i < n ; i++)\{\
+				ids[i] = i;\
+				size[i] = 1;\
+			\}\
+		\}\
+		int find(int p)\{\
+			int root = p;\
+			while(root != ids[root])\
+				root = ids[root];\
+\
+			while( p != root)\{\
+				int next = ids[p];\
+				ids[p] = root;\
+				p = next;\
+			\}\
+			return root;\
+		\}\
+\
+		void union( int p , int q)\{\
+			int root1 = find(p);\
+			int root2 = find(q);\
+\
+			if( root1 == root2)\
+				return ;\
+			if(size[root1] < size[root2])\{\
+				size[root2] += size[root1];\
+				ids[root1] = root2;\
+				size[root1] = 0;\
+			\}\
+			else\{\
+				size[root1] += size[root2];\
+				ids[root2] = root1;\
+				size[root2] = 0;\
+			\}\
+		\}\
+	\}   \
+\}\
+ class Solution \{\
+    public int findJudge(int n, int[][] trust) \{\
+        int[] \
+    \}\
+\}\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}
+
+
+
+
+class Solution {
+    public int findJudge(int n, int[][] trust) {
+        int[] dp = new int[n + 1];
+        for(int[] edge : trust){
+            dp[edge[0]]--;
+            dp[edge[1]]++;
+        }
+        for(int i = 0; i < dp.length; i++){
+            if(dp[i] == n - 1)
+                return i;
+        }
+        return -1;
+    }
+}
+
+class Solution {
+    public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges){
+        int[][] graph = new in[n + 1][n + 1];
+        int[] indegree = new int[n + 1];
+        for(List<Integer> list : edges){
+            graph[list.get(0)][list.get(1)] = 1;
+            indegree[list.get(1)] = 1;
+        }
+        Stack<Integer> stack = new Stack<>();
+        boolean[] visited = new boolean[n];
+        for(int i = 1; i < indegree.length; i++){
+            if(indegree[i] != 0)
+                continue;
+            visited[i] = true;
+            stack.push(i);
+            while(!stack.isEmpty()){
+                int v = getUnvisitedNode(graph, visited, stack.peek());
+                if(v != -1){
+                    visited[v] = true;
+                    stack.push(v);
+                }
+                stack.pop();
+            }
+            result.add(i);
+        }
+        return result;
+    }
+    int getUnvisitedNode(int[][] matrix, boolean[] visited, int v){
+        for(int i = 0; i <= n ; i++){
+            if(matrix[v][i] != 0 && !visited[i])
+                return i;
+        }
+        return  -1;
+    }
+}
+
+class Solution {
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        boolean[] visited = new boolean[rooms.size()];
+        canVisitAllRooms(rooms, 0, visited);
+        for(int i = 0; i < visited.length; i++){
+            if(!visited[i])
+                return false;
+        }
+        return true;
+    }
+    boolean canVisiteAllRooms(List<List<Integer>> rooms, int start, boolean[] visited){
+        for(int v : rooms.get(start)){
+            if(visited[v])
+                continue;
+            visited[v] = true;
+            canVisiteAllRooms(rooms, v, visited);
+        }
+    }
+}
+
+
+
+class Solution {
+    int res = 1;
+    public int findCircleNum(int[][] isConnected) {
+        boolean[] visited = new boolean[isConnected.length];
+        Stack<Integer> stack = new Stack<>();
+        for(int i = 0; i < isConnected.length; i++){
+            for(int j = 0; j < isConnected[0].length; j++){
+                if(isConnected[i][j] == 1){
+                    dfs(isConnected, i, stack, visited);
+                }
+            }
+        }
+        return res;
+    }
+    void dfs(int[][] matrix, int i, Stack<Integer> stack, boolean[] visited){
+        visited[i] = true;
+        stack.push(i);
+        while(!stack.isEmpty()){
+            int v = getUnvisitedNode(matrix, visited, stack.peek());
+            if(v != -1){
+                visited[v] = true;
+                stack.push(v);
+            }
+            stack.pop();
+        }
+        for(int j  = 0; j < visited.length; j++){
+            if(!visited[j])
+                res++;
+        }
+   }
+   int getUnvisitedNode(int[][] matrix, boolean[] visited, int v){
+        for(int i = 0; i < visited.length ; i++){
+            if(matrix[v][i] == 1 && !visited[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+
+class Solution {
+    int[] result = new int[2];
+    public int[] findRedundantConnection(int[][] edges) {
+        int[][] graph = new int[edges.length][edges.length];
+        for(int[] edge : edges){
+            graph[edge[0] - 1][edge[1] - 1] = 1;
+        }
+        Stack<Integer> s = new Stack<>();
+        s.push(edges[0][0] - 1);
+        boolean[] visited = new boolean[edges.length];
+        dfs(graph, edges[0][0] - 1, s, visited);
+        return result;
+    }
+    void dfs(int[][] graph, int src, Stack<Integer> s, boolean[] visited){
+        visited[src] =  true;
+        s.push(src);
+        while(!s.isEmpty()){
+            int v = getUnvisitedNode(graph, visited, s.peek());
+            if(v != -1){
+                visited[v] = true;
+                s.push(v);
+            }
+            else{
+                result[0] = s.peek() + 1;
+                result[1] = v + 1;
+                s.pop();
+            }
+        }
+    }
+    int getUnvisitedNode(int[][] graph, boolean[] visited, int v){
+        for(int i = 0; i < visited.length; i++){
+            if(graph[v][i] != 0 && !visited[i]){
+                return i;
+            }
+        }
+        return -1;
+
+    }
+}
+
+
+class Solution {
+    int[] result = new int[2];
+    public int[] findRedundantConnection(int[][] edges) {
+        UnionFind uf = new UnionFind(edges.length);
+        for(int[] edge : edges){
+            if(uf.union(edge[0] - 1, edge[1] - 1)){
+                result = new int[]{edge[0], edge[1]};
+            }
+        }
+        return result;
+    }
+    
+    class UnionFind{
+        int[] ids, size;
+        UnionFind(int size){
+            this.ids = new int[size];
+            this.size = new int[size];
+            for(int i = 0; i < size; i++){
+                this.ids[i] = i;
+                this.size[i] = 1;
+            }
+        }
+        int find(int p){
+            int root = p;
+            while(root != ids[root])
+                root = ids[root];
+            
+            while(p != root){
+                int next = ids[p];
+                ids[p] = root;
+                p = next;
+            }
+            return root;
+        }
+        boolean union(int p, int q){
+            int root1 = find(p);
+            int root2 = find(q);
+            if(root1 == root2)
+                return true;
+            if(size[root1] < size[root2]){
+                size[root2] += size[root1];
+                ids[root1] = root2;
+                size[root1] = 0;
+            }
+            else{
+                size[root1] += size[root2];
+                ids[root2] = root1;
+                size[root2] = 0;
+            }
+            return false;
+        }
+    }
+}
+ 
+ class Solution {
+    public int minReorder(int n, int[][] connections) {
+        List<List<Integer>> list = new ArrayList<>();
+        for(int i = 0; i < n ; i++){
+            list.add(new ArrayList<>());
+        }
+        for(int[] c : connections){
+            list.get(c[0]).add(c[1]);
+            list.get(c[1]).add(-c[0]);
+        }
+        return dfs(list, new boolean[n], 0);
+    }
+    int dfs(List<List<Integer>> list, boolean[] visited, int src){
+        int change = 0;
+        visited[src] = true;
+        for(int to : list.get(src)){
+            if(!visited[Math.abs(to)]){
+                change += dfs(list, visited, Math.abs(to)) + ( to > 0 ? 1 : 0) ;
+            }
+        }
+        return change;
+    }
+}
+
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        UnionFind uf = new UnionFind(n);
+        int edge = 0;
+        for( int[] connection : connections){
+            if(uf.union(connection[0], connection[1])){
+                edge++;
+            }
+        }
+        int max = 0;
+        for(int i = 0; i < n; i++)
+            if(uf.ids[i] == i) max++;
+        return (edge >= max - 1) ? max - 1 : -1;        
+    }
+    class UnionFind{
+        int[] ids, size;
+        UnionFind(int size){
+            this.size = new int[size];
+            this.ids = new int[size];
+            for(int i = 0; i < size; i++){
+                this.ids[i] = i;
+                this.size[i] = 1;
+            }
+        }
+        int find(int p){
+            int root = p;
+            while(root != ids[root])
+                root = ids[root];
+
+            while(p != root){
+                int next = ids[p];
+                ids[p] = root;
+                p = next;
+            }
+            return root;
+        }
+        boolean union(int p, int q){
+            int root1 = find(p);
+            int root2 = find(q);
+            if(root1 == root2)
+                return true;
+            if(size[root1] < size[root2]){
+                size[root2] += size[root1];
+                ids[root1] = root2;
+                size[root1] = 0;
+            }
+            else{
+                size[root1] += size[root2];
+                ids[root2] = root1;
+                size[root2] = 0;
+            }
+            return false;
+        }
+    }
+    
+}
+
+
+
+class Solution {
+    List<Integer> result = new ArrayList<>();
+    enum Color{
+        White, Grey, Black;
+    }
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        Color[] colors = new Color[graph.length];
+        Arrays.fill(colors, Color.White);
+        for(int i = 0; i < graph.length; i++){
+            if(dfs(graph, 0, colors)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
+    boolean dfs(int[][] graph, int src, Color[] colors){
+        colors[src] = Color.Grey;
+        for(int v : graph[src]){
+            if(colors[v] == Color.Grey){
+                return true;
+            }
+            if( colors[v] == Color.White){
+                if(dfs(graph, v, colors)){
+                    return true;
+                }
+            }
+        }
+        colors[src] = Color.Black;
+        return false;
+    }
+}
+
+
+class Solution {
+    public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+        int[][] graph = new int[n][n];
+
+        for(int i = 0; i < n; i++){
+            Arrays.fill(graph[i], (int) 1e6);
+            graph[i][i] = 0;
+        }
+        for(int[] edge : edges){
+            graph[edge[0]][edge[1]] = edge[2];
+            graph[edge[1]][edge[0]] = edge[2];
+        }
+        for(int k = 0; k < n; k++){
+            for(int i = 0; i < n; i++){
+                for(int j = 0; j < n; j++){
+                    if(graph[i][j] > graph[i][k] + graph[k][j]){
+                        graph[i][j] =  graph[i][k] + graph[k][j];
+                    }
+                }
+            }
+        }
+        
+        int minReachable = n, res = 0;
+        for(int i = 0; i < n; i++){
+            int reachable = 0;
+            for(int j = 0; j < n; j++){
+                if(graph[i][j] <= distanceThreshold){
+                    reachable++;
+                }
+            }
+           if(reachable <= minReachable){
+               minReachable = reachable;
+               res = i;
+           }
+        }
+        return res;
+    }
+}
+
+class Solution {
+    public boolean equationsPossible(String[] equations) {
+        UnionFind uf = new UnionFind(equations.length);
+        int n = equations.length;
+        for(String str : equations){
+            if(str.charAt(1) == '='){
+                uf.union(str.charAt(0), str.charAt(3));
+            }
+        }
+        for(String str : equations){
+            if(str.charAt(1) == '!'){
+                if(uf.find(str.charAt(0)) == uf.find(str.charAt(3))){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    class UnionFind{
+        int[] ids, size;
+
+        UnionFind(int size){
+            this.ids = new int[size];
+            this.size= new int[size];
+            
+            for(int i = 0; i < size; i++){
+                this.ids[i] = i;
+                this.size[i] = 1;
+            }
+        }
+        
+        int find(int p ){
+            int root = p;
+            while(root != ids[root]){
+                root = ids[root];
+            }
+            while(p != root){
+                int next = ids[p];
+                ids[p] = root;
+                p = next;
+            }
+            return root;
+        }
+        boolean union(int p, int q){
+            int root1 = find(p);
+            int root2 = find(q);
+            if(root1 == root2)
+                return true;
+
+            if(size[root1] < size[root2]){
+                size[root2] += size[root1];
+                ids[root1] = root2;
+                size[root1] = 0;
+            }
+            else{
+                size[root1] += size[root2];
+                ids[root2] = root1;
+                size[root2] = 0;
+            }
+            return false;
+        }
+    }
+}
+
+class Solution {
+    public int networkDelayTime(int[][] times, int n, int K) {
+        int[][] graph = new int[n][n];
+        for(int i = 0; i < n ; i++)
+            Arrays.fill(graph[i], Integer.MAX_VALUE);
+        
+        for( int[] rows : times){
+                int u = rows[0] - 1;
+                int v = rows[1] - 1;
+                int w = rows[2];
+                graph[u][v] =  w;
+        }
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[K - 1] = 0;
+        boolean[] visited = new boolean[n];
+        for(int i = 0; i < n ; i++){
+            int v = minIndex(distance, visited);
+            if(v == -1)continue;
+            visited[v] = true;
+            for(int j = 0; j < n; j++){
+                if(graph[v][j] != Integer.MAX_VALUE){
+                    if(!visited[j] && graph[v][j] != Integer.MAX_VALUE){
+                        int newDist = graph[v][j] + distance[v];
+                        if(newDist < distance[j]){
+                            distance[j] = newDist;
+                        }
+                    }
+                }
+            }
+        }
+        int result = 0;
+        for(int dist : distance){
+            if(dist == Integer.MAX_VALUE)
+                return -1;
+            result = Math.max(result, dist);
+        }
+        return result;
+    }
+    int minIndex(int[] distance, boolean[] visited){
+        int min = Integer.MAX_VALUE;
+        int minIndex = -1 ;
+        for(int i = 0; i < distance.length; i++){
+            if(!visited[i] && distance[i] < min){
+                min = distance[i];
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
+}
+
+
+class Solution {
+    public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
+        int[][] graph = new int[numCourses][numCourses];
+        for(int i = 0; i < numCourses; i++){
+            Arrays.fill(graph[i], Integer.MAX_VALUE);
+        }
+        for(int[] edge : prerequisites){
+            graph[edge[0]][edge[1]] = 1;
+        }
+
+        Stack<Integer> s = new Stack<>();
+        boolean[] visited = new boolean[numCourses];
+        for(int i = 0; i < numCourses; i++){
+            s.push(i);
+            while(!s.isEmpty()){
+                int v = getUnvisitedNode(graph, visited, s.peek());
+                if(v != -1){
+                    visited[v] = true;
+                    s.push(v);
+                }
+                else{
+                    result.push(s.pop());
+                }
+            }
+        }
+        int[] res = new int[s.size()];
+        int index = 0;
+        while(!s.isEmpty()){
+            res[index++] = s.pop();
+        }
+        index = 0;
+        for(int[] query : queries){
+            int i = 0;
+            while(i < res.length){
+                if(res[i] == query[0]){
+                    break;
+                }
+                i++;
+            }
+            int j = res.length - 1;
+            while(j >= 0){
+                if(res[j] == query[1]){
+                    break;
+                }
+                j++;
+            }
+            if(j - j > 0){
+                res[index++] = true;
+            }
+        }
+
+    }
+    int getUnvisitedNode(int[][] graph, boolean[] visited, int v){
+        for(int i = 0; i < visited.length; i++){
+            if( graph[v][i] != Integer.MAX_VALUE && !visited[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+    
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int[] indegree = new int[numCourses];
+        int[][] graph = new int[numCourses][numCourses];
+        for( int[] rows : prerequisites) {
+            int pre = rows[1];
+            int post = rows[0];
+            if(graph[pre][post] == 0){
+                indegree[post]++;
+            }
+            graph[pre][post] = 1;
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0; i < numCourses; i++ ){
+            if(indegree[i] == 0)
+                q.offer(i);
+        }
+
+        int course = 0;
+        while(!q.isEmpty()){
+            int v = q.poll();
+            course++;
+            for(int i = 0; i < numCourses; i++){
+                if(graph[v][i] != 0){
+                    if(--indegree[i] == 0){
+                        q.offer(i);
+                    }
+                }
+            }
+        }
+        return course == numCourses;
+    }
+}
+
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+class Solution {
+    public Node cloneGraph(Node node) {
+        Node graph= new Node(node.val);
+        Map<Node, Node> map = new HashMap<>();
+        map.put(node, graph);
+        Queue<Node> q = new LinkedList<>();
+        q.offer(node);
+        while(!q.isEmpty()){
+            Node curr = q.poll();
+            for(Node neighbor : curr.neighbors){
+                if(!map.contains(neighbor)){
+                    map.put(neighbor, new Node(neighbor.val));
+                    q.offer(neighbor);
+                }
+                map.get(curr).neighbor.add(map.get(neighbor));
+            }
+        }
+       return graph;
+    }
+}
+
+class Solution {
+    int[][] directions = {{1, 0},{-1, 0},{0, -1},{0, 1}};
+    public int longestIncreasingPath(int[][] matrix) {
+        int[][] dp = new int[matrix.length][matrix[0].length];
+        int result = 0;
+        for(int i = 0; i < matrix.length; i++ ){
+            for(int  j = 0; j < matrix[0].length; j++){
+                int max = largestPath(matrix, i, j, dp);
+                result = Math.max(result, max);
+            }
+        }
+        return result;
+    }
+    int largestPath(int[][] graph, int i, int j, int[][] dp){
+        if(dp[i][j] > 0){
+            return dp[i][j];
+        }
+        int res = 0;
+        for(int[] direction : directions){
+            int x = i + direction[0];
+            int y = j + direction[1];
+            if(x >= 0 && y >=0 && x < graph.length && y < graph[0].length && graph[x][y] > graph[i][j] ){
+                int max = largestPath(graph, x, y, dp);
+                res = Math.max(res, max);
+            }
+        }
+        return dp[i][j] = res + 1; 
+    }
+}
+
+
+class Solution {
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        
+        Job[] jobs = new Job[startTime.length];
+        for(int i = 0; i < startTime.length; i++){
+            jobs[i] = new Job(startTime[i], endTime[i], profit[i]);
+        }
+        Arrays.sort(jobs, (a, b) -> a.end - b.end);
+        int[] dp = new int[startTime.length];
+        dp[0] = jobs[0].profit;
+        for(int i = 1; i < jobs.length; i++){
+            dp[i] = Math.max(dp[i - 1], jobs[i].profit);
+            for(int j = i - 1; j >= 0; j--){
+                if(jobs[j].end <= jobs[i].start){
+                    dp[i] = Math.max(dp[i], jobs[i].profit + dp[j]);
+                    break;
+                }
+            }
+        }
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < dp.length; i++)
+            max = Math.max(max, dp[i]);
+
+        return max;
+
+    }
+    class Job{
+        int start, end, profit;
+        Job(int start, int end, int profit){
+            this.start = start;
+            this.end = end;
+            this.profit = profit;
+        }
+    }
+}
+// This solution was not accepted and has bad code quality.
+class Solution {
+    public int minimumDeletions(int[] nums) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int res = 1;
+        int maxIndex = 0, minIndex = 0, n = 0;
+
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] > max ){
+                max = nums[i];
+                maxIndex = i;
+            }
+        }
+        boolean left = false;
+        if(maxIndex - 0 < n - maxIndex){
+             res += maxIndex;
+            left = true;
+        }
+        else{
+             res += n - maxIndex;
+        }
+
+        if(left){
+            i = maxIndex + 1;
+        }
+        else{
+            n = maxIndex - 1;
+        }
+        for(int j = i; j <= n; j++){
+            if(nums[i] < min){
+                min = nums[i];
+                minIndex = i;
+            }
+        }
+        if(minIndex - i < n - minIndex){
+            res += minIndex - i;
+        }
+        else{
+            res += n - minIndex;
+        }
+        return result;
+    }
+}
+
+
+class Solution {
+    int res = 0;
+    public int maxSumDivThree(int[] nums) {
+        backtrack(nums, 0, 0); 
+        return res;
+    }
+    void backtrack(int[] nums, int start, int sum){
+        if(start == nums.length )
+            return;
+        if(sum % 3 == 0){
+            res = Math.max(res, sum);
+        }
+        for(int i = start; i < nums.length; i++){
+            backtrack(nums, i + 1, sum + nums[i]);
+        }
+    }
+}
+
+class Solution {
+    public int findCenter(int[][] edges) {
+        int[] indegree = new int[edges.length + 1];
+        int vertex = 0;
+        for(int[] edge : edges){
+            indegree[edge[1] - 1]++;
+            indegree[edge[0] - 1]++;
+        }
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < indegree.length; i++){
+            if(indegree[i] > max){
+                max = indegree[i];
+                vertex = i;
+            }
+        }
+        return vertex + 1;
+    }
+}
+
+class Solution {
+    public int findJudge(int n, int[][] trust) {
+        int[] indegree = new int[n];
+        for(int[] edge : trust){
+            indegree[edge[0] - 1]--;
+            indegree[edge[1] - 1]++;
+        }
+        for(int i = 0; i < indegree.length; i++){
+            if(indegree[i] == n - 1)
+                return i;
+        }
+        return -1;
+    }
+}
+
+class Solution {
+    List<List<Integer>> paths = new ArrayList<>();
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<Integer> path = new ArrayList<>();
+        path.add(0);
+        dfs(graph, path, 0);
+        return paths;
+    }
+    void dfs(int[][] graph, List<Integer> list, int src){
+        if(src == graph.length - 1){
+            paths.add(new ArrayList<>(list));
+        }
+        for(int edge : graph[src]){
+            list.add(edge);
+            dfs(graph, list, edge);
+            list.remove(list.size() - 1);
+        }
+    }
+}
+
+class Solution {
+    public List<Integer> findSmallestSetOfVertices(int n, List<List<Integer>> edges) {
+        int[] indegree = new int[n];
+        for(List<Integer> edge : edges){
+            indegree[edge[1]] = 1;
+        }
+        List<Integer> result = new ArrayList<>();
+        for(int i = 0; i < indegree.length; i++)
+            if(indegree[i] == 0)
+                result.add(i);
+        }
+        return result;
+    }
+
+}
+
+class Solution {
+    public boolean canVisitAllRooms(List<List<Integer>> rooms) {
+        boolean[] visited = new boolean[rooms.size()];
+        dfs(rooms, 0, visited);
+        for(int i = 0; i < visited.length; i++){
+            if(!visited[i])
+                return false;
+        }
+        return true;
+    }
+    void dfs(List<List<Integer>> rooms, int start, boolean[] visited){
+        if(visited[start])
+            return;
+        
+        visited[start] = true;
+        for(int room : rooms.get(start)){
+            if(visited[room])
+                continue;
+            dfs(rooms, room, visited);
+        }
+    }
+}
+
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        boolean[] visited = new boolean[isConnected.length];
+        int res = 0;
+        Stack<Integer> stack = new Stack<>();
+        for(int i = 0; i < isConnected.length; i++){
+            for(int j = 0; j < isConnected[0].length; j++){
+                if(isConnected[i][j] == 1 && !visited[i]){
+                    dfs(isConnected, i, stack, visited);
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    void dfs(int[][] graph, int src, Stack<Integer> stack, boolean[] visited){
+        visited[src] = true;
+        stack.push(src);
+        while(!stack.isEmpty()){
+            int v = getUnvisitedNode(graph, visited, stack.peek());
+            if(v != -1){
+                visited[v] = true;
+                stack.push(v);
+            }
+            else
+                stack.pop();
+        }
+    }
+    int getUnvisitedNode(int[][] graph, boolean[] visited, int v){
+        for(int i = 0; i < visited.length; i++ ){
+            if(graph[v][i] == 1 && !visited[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+// Recursive solution of above iterative solution
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        boolean[] visited = new boolean[isConnected.length];
+        int res = 0;
+        for(int i = 0; i < isConnected.length; i++){
+            if(!visited[i]){
+                dfs(isConnected, i, visited);
+                res++;
+            }
+        }
+        return res;
+    }
+
+    void dfs(int[][] graph, int src, boolean[] visited){
+        for(int i = 0; i < graph.length; i++){
+            if(graph[src][i] == 1 && !visited[i]){
+                visited[i] = true;
+                dfs(graph, i, visited);
+            }
+
+        }
+    }
+}
+
+
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        UnionFind uf = new UnionFind(edges.length + 1);
+        for(int[] edge : edges){
+            if(uf.union(edge[0], edge[1]))
+                return edge;
+        }
+        return null;
+    }
+    class UnionFind{
+        int[] ids, size;
+        UnionFind(int max){
+            this.ids = new int[max];
+            this.size = new int[max];
+            for(int i = 0; i < max; i++){
+                this.ids[i] = i;
+                this.size[i] = 1;
+            }
+        }
+
+        int find(int p){
+            int root = p;
+            while(root != ids[root]){
+                root = ids[root];
+            }
+
+            while(p != root){
+                int next = ids[p];
+                ids[p] = root;
+                p = next;
+            }
+            return root;
+        }
+
+        boolean union(int p, int q){
+            int root1 = find(p);
+            int root2 = find(q);
+            if(root1 == root2)
+                return true;
+
+            if(size[root1] < size[root2]){
+                size[root2] += size[root1];
+                ids[root1] = root2;
+                size[root1] = 0;
+            }
+            else{
+                size[root1] += size[root2];
+                ids[root2] = root1;
+                size[root2] = 0;
+            }
+            return false;
+        }
+    }
+}
+
+
+class Solution {
+    public int removeStones(int[][] stones) {
+        
+        UnionFind uf = new UnionFind(stones.length);
+        for(int i = 0; i < stones.length; i++){
+            for( int j = 0; j < stones.length; j++){
+                if(stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1] )
+                    uf.union(i, j);
+            }
+        }
+        int count = 0;
+        for(int i = 0; i < stones.length; i++){
+            if(uf.ids[i] == i){
+                count++;
+            }
+        }
+        return stones.length - count;
+
+        
+    }
+    class UnionFind{
+        int[] ids, size;
+        UnionFind(int size){
+            this.size = new int[size];
+            this.ids = new int[size];
+            for(int i = 0; i < size; i++){
+                this.ids[i] = i;
+                this.size[i] = 1;
+            }
+        }
+
+        int find(int p){
+            int root = p;
+            while(root != ids[root])
+                root = ids[root];
+
+            while(p != root){
+                int next = ids[p];
+                ids[p] = root;
+                p = root;
+            }
+            return root;
+        }
+        
+        void union(int p , int q){
+            int root1 = find(p);
+            int root2 = find(q);
+            if(root1 == root2)
+                return ;
+
+            if(size[root1] < size[root2]){
+                size[root2] += size[root1];
+                ids[root1] = root2;
+                size[root1] = 0;
+            }
+            else{
+                size[root1] += size[root2];
+                ids[root2] = root1;
+                size[root2] = 0;
+            }
+        }
+    }
+}
+
+class Solution {
+    enum Color{
+        White, Grey, Black;
+    }
+    List<Integer> result = new ArrayList<>();
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+        Color[] colors = new Colors[graph.length];
+        Arrays.fill(colors, Color.White);
+        for(int i = 0; i < graph.length; i++){
+            if(!dfs(graph, 0, colors))
+                result.add(i);
+        }
+        return result;
+    }
+
+    boolean dfs(int[][] graph, int src, Color[] colors){
+        if(colors[src] == Color.Grey){
+            return true;
+        }
+        colors[src] = Color.Grey;
+        for(int v : graph[src]){
+            if(color[v] == Grey){
+                return true;
+            }
+            if(colors[v] == Colors.White){
+                if(dfs(graph, v, colors))
+                    return true;
+            }
+        }
+        colors[src] = Color.Black;
+        return false;
+    }
+}
+
+
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        boolean[] isVisited = new boolean[graph.length];
+        for(int i = 0; i < graph.length; i++){
+            if(!isVisited[i] && !dfs(graph, isVisited, true, i)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    boolean dfs(int[][] graph, boolean[] isVisited, boolean visited, int v){
+        if(!isVisited[v]){
+            return isVisited[v] == visited;
+        }
+        
+        isVisited[v] = visited;
+        for(int neighbor : graph[v]){
+            if(!dfs(graph, isVisited, !visited, neighbor)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int[] colors = new int[graph.length];
+        for(int i = 0; i < graph.length; i++){
+            if(colors[i] == 0){
+                Queue<Integer> q = new LinkedList<>();
+                q.offer(i);
+                colors[i] = 1;
+                while(!q.isEmpty()){
+                    int v = q.poll();
+                    for(int neighbour : graph[v]){
+                        if(colors[v] == colors[neighbors]){
+                            return false;
+                        }
+                        else if(colors[neighbors] == 0){
+                            q.offer(neighbour);
+                            colors[neighbors] = -colors[v];
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
+ 
+class Solution {
+    public boolean equationsPossible(String[] equations) {
+        UnionFind uf = new UnionFind(equations.length);
+        for(String equation : equations){
+            if( equation.charAt(1) == '=' ){
+                uf.union(equation.charAt(0) - 'a' , equation.charAt(3) - 'a' );
+            }
+        }
+        for(String equation : equations){
+            if( equation.charAt(1) == '!'){
+                if(uf.find( equation.charAt(0) - 'a' ) == uf.find(equation.charAt(3) - 'a') ){
+                    return false;
+
+                }
+            }
+        }
+        return true;
+    }
+    
+    class UnionFind{
+        int[] ids, size;
+        UnionFind(int max){
+            this.ids = new int[max];
+            this.size = new int[max];
+            for(int i = 0; i < max; i++){
+                this.ids[i] = i;
+                this.size[i] = 1;
+            }
+        }
+        int find(int p){
+            int root = p;
+            while(root != ids[root]){
+                root = ids[root];
+            }
+            while( p != root){
+                int next = ids[p];
+                ids[p] = root;
+                p = root;
+            }
+            return root;
+        }
+        void union(int p, int q){
+            int root1 = find(p);
+            int root2 = find(q);
+            if(root1 == root2)
+                return;
+            if(size[root1] < size[root2]){
+                size[root2] += size[root1];
+                ids[root1] = root2;
+                size[root1] = 0;
+            }
+            else{
+                size[root1] += size[root2];
+                ids[root2] = root1;
+                size[root2] = 0;
+            }
+        }
+    }
+}
+
+class Solution {
+    public int networkDelayTime(int[][] times, int n, int k) {
+        int[][] graph = new int[n][n];
+        for(int i = 0; i < n; i++)
+            Arrays.fill(graph[i], Integer.MAX_VALUE);
+        
+        for(int i = 0; i < times.length; i++){
+            int src = times[i][0];
+            int dest = times[i][1];
+            int weight = times[i][2];
+            graph[src - 1 ][ dest - 1] = weight;
+        }
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[k - 1] = 0;
+        dijkstra(graph, distance, k);
+
+        int res = Integer.MIN_VALUE;
+        for(int dist : distance){
+            res = Math.max(res, dist);
+        }
+        return res == Integer.MAX_VALUE ? -1 : res;
+        
+    }
+
+    void dijkstra(int[][] graph, int[] distance, int src){
+        boolean[] visited = new boolean[distance.length];
+        for(int i = 0; i < distance.length; i++){
+            int u = getMin(distance, visited);
+            if(u == -1)
+                continue;
+            visited[u] = true;
+            for(int j = 0; j < distance.length; j++){
+                if(!visited[j] &&  graph[u][j] != Integer.MAX_VALUE){
+                    int newDist = graph[u][j] + distance[u];
+                    if(newDist < distance[j]){
+                        distance[j] = newDist;
+                    }
+                }
+            }
+        }
+    }
+    int getMin(int[] distance, boolean[] visited){
+        int min = Integer.MAX_VALUE;
+        int v = -1;
+        for(int i = 0; i < distance.length; i++){
+            if(!visited[i] && distance[i] < min){
+                min = distance[i];
+                v = i;
+            }
+        }
+        return v;
+    }
+}
+
+class Solution {
+    public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
+        boolean[][] connected = new boolean[numCourses][numCourses];
+        for(int[] p : prerequisites){
+            connected[p[0]][p[1]] = true;
+        }
+        for(int k = 0; k < numCourses; k++){
+            for(int i = 0; i < numCourses; i++){
+                for(int j = 0; j < numCourses; j++){
+                    connected[i][j] = connected[i][j] || connected[i][k] && connected[k][j];
+                }
+            }
+        }
+        List<Boolean> result = new ArrayList<>();
+        for(int[] q : queries){
+            result.add(connected[q[0]][q[1]]);
+        }
+        return result;
+    }
+}
+
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[][] graph = new int[numCourses][numCourses];
+        int[] indegree = new int[numCourses];
+        for(int[] p : prerequisites){
+            int pre = p[1];
+            int post = p[0];
+            if(graph[pre][post] == 0)
+                indegree[post]++;
+            graph[pre][post] = 1;
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0 ; i < indegree.length; i++){
+            if(indegree[i] == 0)
+                q.offer(i);
+        }
+        List<Integer> list = new ArrayList<>();
+        while(!q.isEmpty()){
+            int u = q.poll();
+            for(int v : graph[u]){
+                if(indegree[v] != 0){
+                    if(--indegree[v] == 0){
+                        list.offer(v);
+                        q.offer(v);
+                    }
+                }
+            }
+        }
+        int[] result = new  int[list.size()];
+        for(int i = 0; i < list.size(); i++){
+            result[i] = list.get(i);
+        }
+        return result;
+    }
+}
+
+class Solution {
+    public int shortestPathLength(int[][] g) {
+        int res = 0;
+        int[][] graph = new int[g.length][g.length];
+        for(int i = 0; i < g.length; i++){
+            for(int edge : g[i]){
+                graph[i][edge] = 1;
+                graph[edge][i] = 1;
+            }
+        }
+        boolean[] visited = new boolean[g.length];
+        Stack<Integer> s = new Stack<>();
+        s.push(0);
+        while(!s.isEmpty()){
+            int curr = s.peek();
+            int u = getUnvisitedNode(graph,visited, curr);
+            if(u != -1){
+                visited[u] = true;
+                stack.push(u);
+                res++;
+            }
+            else{
+                s.pop();
+            }
+        }
+        return res;
+    }
+    int getUnvisitedNode(int[][] graph, boolean[] visited, int v){
+        for(int i = 0; i < visited.length; i++){
+            if(graph[v][i] == 1 && !visited[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+class Solution {
+    public int[] findRedundantDirectedConnection(int[][] edges) {
+        UnionFind uf = new UnionFind(edges.length);
+        for(int[] edge : edges){
+            if(uf.union(edge[0],  edge[1]))
+                return edge;
+        }
+       return null;
+    }
+    class UnionFind{
+        int[] ids, size;
+        UnionFind(int max){
+            this.size = new int[max];
+            this.ids = new int[max];
+            for(int i = 0; i < max; i++){
+                this.ids = i;
+                this.size = 1
+            }
+        }
+        int find(int p){
+            int root = p;
+            while(root != ids[root])
+                root = ids[root];
+
+            while(p != root){
+                int next = ids[p];
+                ids[p] = root;
+                p = root;
+            }
+            return root;
+        }
+
+        boolean union(int p, int q){
+            int root1 = find(p):
+            int root2 = find(q);
+            if(root1 == root2){
+                return true;
+            }
+            if(size[root1] < size[root2]){
+                size[root2] += size[root1];
+                ids[root1] = root2;
+                size[root1] = 0;    
+            }
+            else{
+                size[root1] += size[root2];
+                ids[root2] = root1;
+                size[root2] = 0;
+            }
+            return false;
+        }
+    }
+}
+class Solution {
+    public int maxSatisfaction(int[] satisfaction) {
+        int total = 0, res = 0;
+        Arrays.sort(satisfaction);
+        for(int i = satisfaction.length - 1; i >= 0 && satisfaction[i] > -total ; i--){
+                total += satisfaction[i];
+                res += total;
+            }
+        return result;
+    }
+}
+
+class Solution {
+    public int[] countBits(int n) {
+        int[] dp = new int[n + 1];
+        for(int i = 0; i <= n ; i++){
+            if(i % 2 == 0)
+                dp[i] = dp[i / 2];
+            else
+                dp[i] = dp[i / 2] + 1;
+        }
+        return dp[n];
+    }
+}
+
+class Solution {
+    public int[] countBits(int n) {
+        int[] result = new int[n + 1];
+        for(int i = 0; i <= n ; i++){
+            result[i] = getOnes(i);
+        }
+        return result;
+    }
+    int getOnes(int n){
+        int count = 0, rem = 0;
+        while(n != 0){
+            rem = n % 2;
+            n = n/2;
+            count += rem == 1 ? 1 : 0;
+        }
+        return count;
+    }
+}
+
+
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        int[] dp = new int[cost.length];
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        for(int i = 2; i < cost.length; i++){
+            dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
+        }
+        return Math.min(dp[dp.length - 1 ], dp[dp.length - 2]);
+    }
+}
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE, profit = 0;
+        for(int i = 0; i < prices.length; i++){
+            minPrice = Math.min(minPrice, prices[i]);
+            profit = Math.max(profit, prices[i] - minPrice);
+        }
+        return profit;
+    }
+}
+class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int[][] dp = new int[s.length() + 1][t.length() + 1];
+        for(int i = 0; i < s.length(); i++){
+            for(int j = 0; j < t.length(); j++){
+                if(s.charAt(i) == t.charAt(j)){
+                    dp[i + 1][j + 1] = 1 + dp[i][j];  
+                }
+                else{
+                    dp[i + 1][j + 1] = Math.max(dp[i + 1][j], dp[i][j + 1]);
+                }
+            }
+        }
+        return dp[s.length()][t.length()] == s.length();
+    }
+}
+class Solution {
+    public int climbStairs(int n) {
+        if(n == 1)
+            return 1;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 2;
+        for(int i = 2; i <= n; i++){
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+}
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            dp[i] = dp[i - 1] > 0 ?  dp[i - 1] + nums[i] : nums[i];
+        }
+        int max = Integer.MIN_VALUE;
+        for(int val : dp){
+            max = Math.max(max, val);
+        }
+        return max;
+    }
+}
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    Map<Integer, List<TreeNode>>  dp = new HashMap<>();
+    public List<TreeNode> allPossibleFBT(int n) {
+        if(n == 0 || n % 2 == 0){
+            return new ArrayList<>();
+        }
+        return buildTree(n);
+    }
+    List<TreeNode> buildTree(int n){
+        if(dp.containsKey(n))
+            return dp.get(n);
+
+        List<TreeNode> list = new ArrayList<>();
+        if(n == 1){
+            list.add(new TreeNode(0));
+        }
+        else{
+            for(int i = 1; i < n ; i++){
+                List<TreeNode> leftTrees = buildTree(i);
+                dp.put(i, leftTrees);
+                List<TreeNode> rightTrees = buildTree(n - i - 1);
+                for(TreeNode left : leftTrees){
+                    for(TreeNode right : rightTrees){
+                        TreeNode root = new TreeNode(0);
+                        root.left = left;
+                        root.right = right;
+                        list.add(root);
+                    }
+                }
+            }
+        }
+        return list;
+    }
+}
+class Solution {
+    public int countSquares(int[][] matrix) {
+        int res = 0;
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
+                if(i == 0 || j == 0){
+                    if(matrix[i][j] != 0){
+                        res++;
+                        continue;
+                    }
+                }
+               if(matrix[i][j] != 0 && matrix[i - 1][j] == 1 && matrix[i][j - 1] == 1 && matrix[i - 1][j - 1] == 1){
+                    matrix[i][j] += Math.min(matrix[i - 1][j - 1], Math.min(matrix[i - 1][j], matrix[i][j - 1]));
+                    res += matrix[i][j];
+                }
+                else{
+                    res += matrix[i][j];
+                }
+            }
+
+        }
+        return res;
+        
+    }
+}

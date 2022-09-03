@@ -14,41 +14,29 @@
  * }
  */
 class Solution {
-    List<Integer> list=new ArrayList<>();
     public int findSecondMinimumValue(TreeNode root) {
         if(root==null)
             return -1;
-        minLevel(root);
-        if(list.size()==1)
-            return -1;
-        Collections.sort(list);
-        return list.get(1); 
-    }
-    int getSize(TreeNode root){
-        if(root==null)
-            return 0;
-        int size=root.val;
-        size+=getSize(root.left);
-        size+=getSize(root.right);
-        return size;
-
-    }
-    void minLevel(TreeNode root){
-        if(root==null)
-            return ;
-        Queue<TreeNode> q=new LinkedList<>();
-        q.offer(root);
-        while(!q.isEmpty()){
-            TreeNode temp=q.poll();
-            if(temp!=null){
-                if(!list.contains(temp.val)){
-                    list.add(temp.val);
-                }
-                if(temp.left!=null)
-                    q.offer(temp.left);
-                if(temp.right!=null)
-                    q.offer(temp.right);
+        Set<Integer> set=new TreeSet<>();
+        Stack<TreeNode> s=new Stack<>();
+        while(!s.isEmpty() || root!=null){
+            if(root!=null){
+                s.push(root);
+                root=root.left;
+            }
+            else{
+                TreeNode temp=s.pop();
+                set.add(temp.val);
+                root=temp.right;
             }
         }
+        int count=0;
+        for(int val:set){
+            count++;
+            if(count==1){
+                return val;
+            }
+        }
+        return -1;
     }
 }

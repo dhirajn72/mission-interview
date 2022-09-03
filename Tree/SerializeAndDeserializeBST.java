@@ -9,7 +9,6 @@
  */
 public class Codec {
 
-
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         if(root==null)
@@ -42,21 +41,17 @@ public class Codec {
         }
         return root;
     }
-
     TreeNode insert(TreeNode root,String val){
-
         if(root==null){
             root=new TreeNode(Integer.valueOf(val));
             return root;
         }
         else{
             if(val.equals("#")){
-                if(root.left==null){
+                if(root.left==null)
                     root.left=null;
-                }
-                else if(root.right==null){
+                else if(root.right==null)
                     root.right=null;
-                }
             }
             else{
                 if(Integer.valueOf(val)<root.val){
@@ -69,8 +64,6 @@ public class Codec {
         }
         return root;
     }
-
-
 }
 
 // Your Codec object will be instantiated and called as such:
@@ -78,4 +71,4 @@ public class Codec {
 // Codec deser = new Codec();
 // String tree = ser.serialize(root);
 // TreeNode ans = deser.deserialize(tree);
-// return ans;
+// return ans;/ return ans;

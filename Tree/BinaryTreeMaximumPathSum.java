@@ -14,10 +14,10 @@
  * }
  */
 class Solution {
-    int max=Integer.MIN_VALUE;
+    int max=0;
     public int maxPathSum(TreeNode root) {
         if(root==null)
-            return 0;
+            return max;
         dfs(root);
         return max;
     }

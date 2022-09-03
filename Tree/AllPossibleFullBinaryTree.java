@@ -14,13 +14,11 @@
  * }
  */
 class Solution {
-
-    List<TreeNode> result=new ArrayList<>();
     public List<TreeNode> allPossibleFBT(int n) {
         if(n==0)
-            return result;
+            return new ArrayList<>();
         if(n%2==0)
-            return result;
+            return new ArrayList<>();
         return allPossibleTrees(n);
     }
     List<TreeNode> allPossibleTrees(int n){
@@ -31,11 +29,11 @@ class Solution {
         }
         else{
             for(int i=1;i<n;i+=2){
-                List<TreeNode> leftList=allPossibleTrees(i);
+                List<TreeNode> lefList=allPossibleTrees(i);
                 List<TreeNode> rightList=allPossibleTrees(n-i-1);
-                for(TreeNode left:leftList){
+                for(TreeNode left:lefList){
                     for(TreeNode right:rightList){
-                        TreeNode root=new TreeNode(i);
+                        TreeNode root=new TreeNode(0);
                         root.left=left;
                         root.right=right;
                         list.add(root);
