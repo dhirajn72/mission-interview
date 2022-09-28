@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LRUCache {
-	Node head;
-	Node tail;
+	Node head, tail;
 	int max ;
 	Map<Integer, Node> map = new HashMap<>();
 	LRUCache(int size){
@@ -46,6 +45,17 @@ public class LRUCache {
 		}
 		return -1;
 	}
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		Node temp = head;
+		while(temp != null){
+			sb.append(temp.val).append(",");
+			temp = temp.next;
+		}
+		return sb.toString();
+	}
+
 
 	class Node{
 		int key, val ;
@@ -54,12 +64,29 @@ public class LRUCache {
 			this.val =val;
 			this.key = key;
 		}
+		@Override
+		public String toString(){
+			return "Node [ " + this.key + " : " + this.val + "]";
+		}
+
 	}
 
 	public static void main(String[] args) {
-		LRUCache cache = new LRUCache(4);
-		System.out.println(cache.get(3));
-		cache.put(3,4);
-		System.out.println(cache.get(3));
+		LRUCache cache = new LRUCache(5);
+		cache.put(1, 1);
+		cache.put(2, 2);
+		cache.put(3, 3);
+		cache.put(4, 4);
+		cache.put(5, 5);
+		cache.put(6, 6); // this will be added, and 1 will be removed
+		System.out.println(cache.map);
+		System.out.println(cache);
+		System.out.println(cache.get(3)); // Now, 3 will be put at the very front
+		System.out.println(cache);
+		System.out.println(cache.get(2)); // Now, 2 will be put at the very front
+		System.out.println(cache);
+		cache.put(7, 7); // this will remove the oldest element 4
+		System.out.println(cache);
+
 	}
 }

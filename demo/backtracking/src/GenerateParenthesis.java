@@ -14,8 +14,10 @@ public class GenerateParenthesis {
 			list.add(curr);
 			return;
 		}
-		if(open < max ) backtrack(list, curr + "(", open + 1, close, max);
-		if(close < open) backtrack(list, curr + ")", open, close + 1, max);
+		if(open < max )
+			backtrack(list, curr + "(", open + 1, close, max);
+		if(close < open)
+			backtrack(list, curr + ")", open, close + 1, max);
 	}
 
 	public static void main(String[] args) {
